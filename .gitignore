@@ -1,0 +1,4 @@
+# real portal origin injected at build — never commit
+portal-origin.local
+# build output (resolved manifest carries the real origin)
+build/
