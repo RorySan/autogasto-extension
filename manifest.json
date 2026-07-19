@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Autogasto",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "minimum_chrome_version": "111",
   "description": "Types your Autogasto claims into the expenses portal's own expense form as drafts, in the browser you are already signed into. Makes no network request of its own; the only thing it ever reports back is whether the draft saved.",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsuE6w2cXydrcypv23wH2V8ktacVPPI8Ab9s561Q7QvxWxVYfEQ1s/At/+xN1/RplaRd+ygKLBGKFUvJdsYWr2O5ZsoJJwXlU/nFR/2Pt42u0cTibZF8Yt5ZPdsOuHVpeRMvWU/RAegbAINX/zEJe3qpRwCByRWVD/W1UoWR9g/pfm2YLee0fl5mTc6feitI/j15NbuDtz+ETlfwQhhfbfGqGHTghRsUHnRcO1D2vRqeO7dFSXdABbTco+mQGZNsYsuM7nRqVXGk3SsNgOs5TRMUDSgosr6Urc5yjMLEzT31Epi6l17pKul0qDxbcUTztsC5p6jR7XqzDjWduo6WpGwIDAQAB",
