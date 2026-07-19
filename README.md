@@ -50,3 +50,12 @@ PORTAL_ORIGIN=https://your-expense-portal.example node build.mjs
 
 Load `build/` as an unpacked extension, or zip it for the store. `build/` and
 `portal-origin.local` are not tracked.
+
+For a store package, add `STORE=1` (or `--store`). This drops the
+`http://localhost` / `http://127.0.0.1` entries from `externally_connectable`, so
+the published item can only be driven by `https://autogasto.app` — the local
+origins are for development loads only:
+
+```
+STORE=1 PORTAL_ORIGIN=https://your-expense-portal.example node build.mjs
+```

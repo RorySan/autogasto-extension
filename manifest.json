@@ -14,6 +14,10 @@
   },
   "background": { "service_worker": "background.js", "type": "module" },
   "icons": {
+    "16": "icons/pwa-16.png",
+    "32": "icons/pwa-32.png",
+    "48": "icons/pwa-48.png",
+    "128": "icons/pwa-128.png",
     "192": "icons/pwa-192.png",
     "512": "icons/pwa-512.png"
   },

@@ -17,6 +17,11 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT = join(HERE, 'build');
 const PLACEHOLDER = '__PORTAL_ORIGIN__';
 
+// Store packaging: drop the http://localhost + http://127.0.0.1 dev channels from
+// externally_connectable, so a *published* item can only be driven by https://autogasto.app
+// and never by an arbitrary local page. Source keeps them for `node build.mjs` dev loads.
+const STORE = process.env.STORE === '1' || process.argv.includes('--store');
+
 function resolveOrigin() {
   let origin = process.env.PORTAL_ORIGIN;
   if (!origin) {
@@ -39,17 +44,29 @@ function inject(name, origin) {
   writeFileSync(join(OUT, name), src.split(PLACEHOLDER).join(origin));
 }
 
+/* Build the manifest: substitute the origin, then in STORE mode keep only https
+ * externally_connectable matches (drops the localhost/127.0.0.1 dev origins). */
+function buildManifest(origin) {
+  const src = readFileSync(join(HERE, 'manifest.json'), 'utf8').split(PLACEHOLDER).join(origin);
+  const manifest = JSON.parse(src);
+  if (STORE) {
+    const matches = manifest.externally_connectable?.matches || [];
+    manifest.externally_connectable.matches = matches.filter((m) => m.startsWith('https://'));
+  }
+  writeFileSync(join(OUT, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
+}
+
 const origin = resolveOrigin();
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(join(OUT, 'icons'), { recursive: true });
 
 // Files that carry the placeholder — substituted.
-inject('manifest.json', origin);
+buildManifest(origin);
 inject('background.js', origin);
 // Files copied verbatim.
 for (const f of ['dom-inject.js', 'README.md']) copyFileSync(join(HERE, f), join(OUT, f));
-for (const f of ['pwa-192.png', 'pwa-512.png']) {
+for (const f of ['pwa-16.png', 'pwa-32.png', 'pwa-48.png', 'pwa-128.png', 'pwa-192.png', 'pwa-512.png']) {
   copyFileSync(join(HERE, 'icons', f), join(OUT, 'icons', f));
 }
 
-console.log(`Built extension-min/build with origin ${origin}`);
+console.log(`Built extension-min/build with origin ${origin}${STORE ? ' (store: localhost stripped)' : ' (dev)'}`);
